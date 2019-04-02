@@ -153,6 +153,7 @@ my %opts = (
         'File::Spec' => '0',
     },
     TEST_REQUIRES => {
+        'lib::relative' => '0.002',
         'Test::More' => '0',
     },
     PREREQ_PM => {
