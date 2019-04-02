@@ -155,6 +155,7 @@ my %opts = (
     TEST_REQUIRES => {
         'Data::Dumper' => '0',  # to give us a random blessed reference
         'lib::relative' => '0.002',
+        'Import::Into' => '0',
         'Test::Fatal' => '0',
         'Test::More' => '0',
     },
