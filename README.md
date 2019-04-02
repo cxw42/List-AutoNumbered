@@ -1,9 +1,5 @@
-# List::LineNumbered - The great new List::LineNumbered!
+# List::LineNumbered - Add line numbers to lists while creating them
 
-
-# VERSION
-
-Version 0.01
 
 
 Quick summary of what the module does.
@@ -22,9 +18,27 @@ if you don't export anything, such as for a purely object-oriented module.
 
 # SUBROUTINES/METHODS
 
-## function1
+# new
 
-## function2
+Constructor.  Call as $class->new(\_\_LINE\_\_); each element is one line.
+
+## L
+
+Push a new record with the next line number on the front.  Usage:
+
+    $instance->L(whatever args you want to push);
+
+Or, if the current record isn't on the line immediately after the previous
+record,
+
+    $instance->L(
+
+## LSKIP
+
+A convenience function to create a skipper.  Prototyped as `($)` so you can
+use it conveniently with ["L"](#l):
+
+    $instance->L(LSKIP 1, whatever args...);
 
 # AUTHOR
 
@@ -32,9 +46,10 @@ Christopher White, `<cxwembedded at gmail.com>`
 
 # BUGS
 
-Please report any bugs or feature requests to `bug-list-linenumbered at rt.cpan.org`, or through
-the web interface at [https://rt.cpan.org/NoAuth/ReportBug.html?Queue=List-LineNumbered](https://rt.cpan.org/NoAuth/ReportBug.html?Queue=List-LineNumbered).  I will be notified, and then you'll
-automatically be notified of progress on your bug as I make changes.
+Please report any bugs or feature requests through the web interface at
+[https://github.com/cxw42/List-LineNumbered/issues](https://github.com/cxw42/List-LineNumbered/issues).  I will be notified, and
+then you'll automatically be notified of progress on your bug as I make
+changes.
 
 # SUPPORT
 
@@ -44,23 +59,19 @@ You can find documentation for this module with the perldoc command.
 
 You can also look for information at:
 
-- RT: CPAN's request tracker (report bugs here)
+- MetaCPAN
 
-    [https://rt.cpan.org/NoAuth/Bugs.html?Dist=List-LineNumbered](https://rt.cpan.org/NoAuth/Bugs.html?Dist=List-LineNumbered)
-
-- AnnoCPAN: Annotated CPAN documentation
-
-    [http://annocpan.org/dist/List-LineNumbered](http://annocpan.org/dist/List-LineNumbered)
+    [https://metacpan.org/pod/List::LineNumbered](https://metacpan.org/pod/List::LineNumbered)
 
 - CPAN Ratings
 
     [https://cpanratings.perl.org/d/List-LineNumbered](https://cpanratings.perl.org/d/List-LineNumbered)
 
-- Search CPAN
-
-    [https://metacpan.org/release/List-LineNumbered](https://metacpan.org/release/List-LineNumbered)
-
 # ACKNOWLEDGEMENTS
+
+Thanks to zdim for discussion on the
+[Stack Overflow question](https://stackoverflow.com/q/50510809/2877364)
+that was the starting point for this module.
 
 # LICENSE AND COPYRIGHT
 
