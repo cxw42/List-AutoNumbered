@@ -7,7 +7,7 @@ use Test::More;
 plan tests => 1;
 
 BEGIN {
-    use_ok( 'List::LineNumbered' ) || print "Bail out!\n";
+    use_ok( 'List::AutoNumbered' ) || print "Bail out!\n";
 }
 
-diag( "Testing List::LineNumbered $List::LineNumbered::VERSION, Perl $], $^X" );
+diag( "Testing List::AutoNumbered $List::AutoNumbered::VERSION, Perl $], $^X" );

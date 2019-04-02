@@ -1,4 +1,4 @@
-# List::LineNumbered - Add line numbers to lists while creating them
+# List::AutoNumbered - Add line numbers to lists while creating them
 
 
 
@@ -6,9 +6,9 @@ Quick summary of what the module does.
 
 Perhaps a little code snippet.
 
-    use List::LineNumbered;
+    use List::AutoNumbered;
 
-    my $foo = List::LineNumbered->new();
+    my $foo = List::AutoNumbered->new();
     ...
 
 # EXPORT
@@ -47,7 +47,7 @@ Christopher White, `<cxwembedded at gmail.com>`
 # BUGS
 
 Please report any bugs or feature requests through the web interface at
-[https://github.com/cxw42/List-LineNumbered/issues](https://github.com/cxw42/List-LineNumbered/issues).  I will be notified, and
+[https://github.com/cxw42/List-AutoNumbered/issues](https://github.com/cxw42/List-AutoNumbered/issues).  I will be notified, and
 then you'll automatically be notified of progress on your bug as I make
 changes.
 
@@ -55,17 +55,17 @@ changes.
 
 You can find documentation for this module with the perldoc command.
 
-    perldoc List::LineNumbered
+    perldoc List::AutoNumbered
 
 You can also look for information at:
 
 - MetaCPAN
 
-    [https://metacpan.org/pod/List::LineNumbered](https://metacpan.org/pod/List::LineNumbered)
+    [https://metacpan.org/pod/List::AutoNumbered](https://metacpan.org/pod/List::AutoNumbered)
 
 - CPAN Ratings
 
-    [https://cpanratings.perl.org/d/List-LineNumbered](https://cpanratings.perl.org/d/List-LineNumbered)
+    [https://cpanratings.perl.org/d/List-AutoNumbered](https://cpanratings.perl.org/d/List-AutoNumbered)
 
 # ACKNOWLEDGEMENTS
 

@@ -1,4 +1,4 @@
-package List::LineNumbered;
+package List::AutoNumbered;
 
 use 5.006;
 use strict;
@@ -13,7 +13,7 @@ our @EXPORT = qw(LSKIP);
 
 =head1 NAME
 
-List::LineNumbered - Add line numbers to lists while creating them
+List::AutoNumbered - Add line numbers to lists while creating them
 
 =head1 SYNOPSIS
 
@@ -21,9 +21,9 @@ Quick summary of what the module does.
 
 Perhaps a little code snippet.
 
-    use List::LineNumbered;
+    use List::AutoNumbered;
 
-    my $foo = List::LineNumbered->new();
+    my $foo = List::AutoNumbered->new();
     ...
 
 =head1 EXPORT
@@ -131,7 +131,7 @@ sub LSKIP ($) {
 
 # }}}1
 
-1; # End of List::LineNumbered
+1; # End of List::AutoNumbered
 
 # Rest of the docs {{{1
 __END__
@@ -143,7 +143,7 @@ Christopher White, C<< <cxwembedded at gmail.com> >>
 =head1 BUGS
 
 Please report any bugs or feature requests through the web interface at
-L<https://github.com/cxw42/List-LineNumbered/issues>.  I will be notified, and
+L<https://github.com/cxw42/List-AutoNumbered/issues>.  I will be notified, and
 then you'll automatically be notified of progress on your bug as I make
 changes.
 
@@ -151,7 +151,7 @@ changes.
 
 You can find documentation for this module with the perldoc command.
 
-    perldoc List::LineNumbered
+    perldoc List::AutoNumbered
 
 You can also look for information at:
 
@@ -159,11 +159,11 @@ You can also look for information at:
 
 =item * MetaCPAN
 
-L<https://metacpan.org/pod/List::LineNumbered>
+L<https://metacpan.org/pod/List::AutoNumbered>
 
 =item * CPAN Ratings
 
-L<https://cpanratings.perl.org/d/List-LineNumbered>
+L<https://cpanratings.perl.org/d/List-AutoNumbered>
 
 =back
 

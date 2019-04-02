@@ -5,7 +5,7 @@ use ExtUtils::MakeMaker;
 use File::Spec;
 use Config;
 
-my $VERSION_FROM = File::Spec->catfile(qw(lib List LineNumbered.pm));
+my $VERSION_FROM = File::Spec->catfile(qw(lib List AutoNumbered.pm));
 my $IS_TRIAL = check_trial();
 my $secure_perl_path = get_perl_filename();
 my @provides = ();
@@ -140,7 +140,7 @@ EOT
 
 # Main options for EUMM
 my %opts = (
-    NAME             => 'List::LineNumbered',
+    NAME             => 'List::AutoNumbered',
     AUTHOR           => q{Christopher White <cxwembedded@gmail.com>},
     VERSION_FROM     => $VERSION_FROM,
     ABSTRACT_FROM    => $VERSION_FROM,
@@ -148,29 +148,34 @@ my %opts = (
     PL_FILES         => {},
     MIN_PERL_VERSION => '5.006',
     CONFIGURE_REQUIRES => {
+        'Config' => '0',
         'ExtUtils::MakeMaker' => '0',
+        'File::Spec' => '0',
     },
-    BUILD_REQUIRES => {
+    TEST_REQUIRES => {
         'Test::More' => '0',
     },
     PREREQ_PM => {
-        #'ABC'              => '1.6',
-        #'Foo::Bar::Module' => '5.0401',
+        'Exporter' => '0',
+        'parent' => '0',
+        'Scalar::Util' => '1.50',
+        'strict' => '0',
+        'warnings' => '0',
     },
     dist  => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
-    clean => { FILES => 'List-LineNumbered-*' },
+    clean => { FILES => 'List-AutoNumbered-*' },
 
     META_MERGE => {
         'meta-spec' => { version => 2 },
 
         resources => {
             bugtracker => {
-                web  => 'https://github.com/cxw42/List-LineNumbered/issues',
+                web  => 'https://github.com/cxw42/List-AutoNumbered/issues',
             },
             repository => {
                 type => 'git',
-                url  => 'https://github.com/cxw42/List-LineNumbered.git',
-                web  => 'https://github.com/cxw42/List-LineNumbered',
+                url  => 'https://github.com/cxw42/List-AutoNumbered.git',
+                web  => 'https://github.com/cxw42/List-AutoNumbered',
             },
         },
 
