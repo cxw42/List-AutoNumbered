@@ -44,6 +44,8 @@ foo
 foo.*
 TODO
 
+*.bak
+
 # Module::Starter ignores
 Makefile
 Makefile.old
