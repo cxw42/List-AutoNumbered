@@ -1,7 +1,99 @@
 #!perl
+# Tests with TRACE on - for coverage, and to make sure it lives OK.
 use 5.006;
+use strict;
+use warnings;
 use lib::relative '.';
-use MY::Kit;
+use Test::More;
+
+{ # Test manually setting TRACE
+    package T1;
+    use 5.006;
+    use lib::relative '.';
+    use MY::Kit;
+    use Test::Fatal;
+
+    $List::AutoNumbered::TRACE = 1;
+
+    my $dut;
+
+    ok(!defined exception {
+        $dut = List::AutoNumbered->new;
+    }, 'new succeeds');
+
+    ok(!defined exception {
+        $dut->load(100);
+    }, 'load succeeds');
+    is_deeply($dut->arr, [ [1, 100] ], 'load worked');
+
+    ok(!defined exception {
+        $dut->add(101);
+    }, 'add succeeds');
+    is_deeply($dut->arr, [ [1, 100], [101] ], 'add worked');
+    num_is($dut->last_number, 2, 'add incremented number');
+
+    ok(!defined exception {
+        $dut->load(LSKIP 2, 102);
+    }, 'add succeeds');
+    is_deeply($dut->arr, [ [1, 100], [101], [5, 102] ], 'load+skip worked');
+    num_is($dut->last_number, 5, 'load+skip incremented number');
+
+} #package T1
+
+{ # Test importing TRACE
+    package T2;     # Not using MY::Kit
+    use 5.006;
+    use Test::More;
+    use Test::Fatal;
+    use List::AutoNumbered qw(LSKIP *TRACE);
+
+    $TRACE = 1;
+
+    my $dut;
+
+    ok(!defined exception {
+        $dut = List::AutoNumbered->new;
+    }, 'new succeeds');
+
+    ok(!defined exception {
+        $dut->load(100);
+    }, 'load succeeds');
+    is_deeply($dut->arr, [ [1, 100] ], 'load worked');
+
+    ok(!defined exception {
+        $dut->add(101);
+    }, 'add succeeds');
+    is_deeply($dut->arr, [ [1, 100], [101] ], 'add worked');
+    cmp_ok($dut->last_number, '==', 2, 'add incremented number');
+
+    ok(!defined exception {
+        $dut->load(LSKIP 2, 102);
+    }, 'add succeeds');
+    is_deeply($dut->arr, [ [1, 100], [101], [5, 102] ], 'load+skip worked');
+    cmp_ok($dut->last_number, '==', 5, 'load+skip incremented number');
+
+} #package T2
+
+{ # Test importing TRACE via :all
+    package T3;     # Not using MY::Kit
+    use 5.006;
+    use Test::More;
+    use Test::Fatal;
+    use List::AutoNumbered ':all';
+
+    $TRACE = 1;
+
+    my $dut;
+
+    ok(!defined exception {
+        $dut = List::AutoNumbered->new;
+    }, 'new succeeds');
+
+} #package T3
+
+done_testing;
+
+__END__
 
 # Skipper
 my $dut = LSKIP 1;

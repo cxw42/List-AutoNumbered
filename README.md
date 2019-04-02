@@ -2,26 +2,42 @@
 
 
 
-Quick summary of what the module does.
-
-Perhaps a little code snippet.
+This module adds sequential numbers to lists of lists so you don't have to
+type all the numbers.  Its original use case was for adding line numbers
+to lists of testcases.  For example:
 
     use List::AutoNumbered;
+    use Test::More tests => 1;
 
-    my $foo = List::AutoNumbered->new();
-    ...
+    my $list = List::AutoNumbered->new;     # First entry will be number 1
+    $list->load('a')->      # Yes, trailing arrow
+        ('b')               # Magic!  Don't need any more arrows!
+        ('c')
+        ('d');
+
+    is_deeply($list->arr, [
+        [1, 'a'], [2, 'b'], [3, 'c'], [4, 'd']
+    ]);     # Yes, it is!
+
+For automatic line numbering, just pass `__LINE__` to the constructor:
+
+    use List::AutoNumbered;                             # line 1
+    my $list = List::AutoNumbered->new(__LINE__);       # line 2
+    $list->load('a')->                                  # line 3
+        ('b')                                           # line 4
+        ('c')                                           # line 5
+        ('d');                                          # line 6
+
+    # Now $list->arr is [ [3,'a'], [4,'b'], [5,'c'], [6,'d'] ]
 
 # GLOBALS
 
 ## $TRACE
 
 (Default falsy) If truthy, print trace output.  Must be accessed directly
-or requested on the `use` line, e.g.:
+unless requested on the `use` line.  Either of the following works:
 
     use List::AutoNumbered; $List::AutoNumbered::TRACE=1;
-
-or
-
     use List::AutoNumbered '*TRACE'; $TRACE=1;
 
 # METHODS
@@ -29,7 +45,8 @@ or
 ## new
 
 Constructor.  Call as `$class->new($number)`.  Each successive element
-will have the next number, unless you say otherwise (e.g., using ["LSKIP"](#lskip)).
+will have the next number, unless you say otherwise (e.g., using
+[LSKIP()](#lskip)).
 
 ## size
 
@@ -44,6 +61,13 @@ Returns the index of the last element in the array.  Like `$#array`.
 Returns a reference to the array being built.  Please do not modify this
 array directly until you are done loading it.  List::AutoNumbered may not
 work if you do.
+
+## last\_number
+
+Returns the current number stored by the instance.  This is the number
+of the most recently preceding [new()](#new) or [load()](#load) call.
+This is **not** the number that will be given to the next record, since that
+depends on whether or not the next record has a skip ([LSKIP()](#lskip)).
 
 ## load
 
@@ -61,25 +85,25 @@ where `$n` is the number of lines between this `load()` call and the last one.
 Returns a coderef that you can call to chain loads.  For example, this works:
 
     $instance->load(...)->(...)(...)(...) ... ;
-    # You need an arrow ^^ here, but none after that.
+    # You need an arrow ^^ here, but don't need any after that.
 
 ## add
 
 Add to the array being built, **without** inserting the number on the front.
-Does increment the number and (TODO) respect skips, for consistency.
+Does increment the number and respect skips, for consistency.
 
 Returns the instance.
 
 ## LSKIP
 
 A convenience function to create a skipper.  Prototyped as `($)` so you can
-use it conveniently with ["load"](#load):
+use it conveniently with [load()](#load):
 
     $instance->load(LSKIP 1, whatever args...);
 
 If you are using line numbers, the parameter to `LSKIP` should be the number
-of lines above the current line and below the last ["new"](#new) or ["load"](#load) call.
-For example:
+of lines above the current line and below the last [new()](#new) or
+[load()](#load) call.  For example:
 
     my $instance = List::AutoNumbered->new(__LINE__);
     # A line
@@ -87,11 +111,11 @@ For example:
     $instance->load(LSKIP 2,    # two comment lines between new() and here
                     'some data');
 
-# PACKAGES
+# INTERNAL PACKAGES
 
 ## List::AutoNumbered::Skipper
 
-This package represents a skip and is created by ["LSKIP"](#lskip).
+This package represents a skip and is created by [LSKIP()](#lskip).
 No user-serviceable parts inside.
 
 ### new
@@ -128,7 +152,7 @@ You can also look for information at:
 
 # ACKNOWLEDGEMENTS
 
-Thanks to zdim for discussion on the
+Thanks to zdim for discussion and ideas in the
 [Stack Overflow question](https://stackoverflow.com/q/50510809/2877364)
 that was the starting point for this module.
 

@@ -26,26 +26,42 @@ List::AutoNumbered - Add line numbers to lists while creating them
 
 =head1 SYNOPSIS
 
-Quick summary of what the module does.
-
-Perhaps a little code snippet.
+This module adds sequential numbers to lists of lists so you don't have to
+type all the numbers.  Its original use case was for adding line numbers
+to lists of testcases.  For example:
 
     use List::AutoNumbered;
+    use Test::More tests => 1;
 
-    my $foo = List::AutoNumbered->new();
-    ...
+    my $list = List::AutoNumbered->new;     # First entry will be number 1
+    $list->load('a')->      # Yes, trailing arrow
+        ('b')               # Magic!  Don't need any more arrows!
+        ('c')
+        ('d');
+
+    is_deeply($list->arr, [
+        [1, 'a'], [2, 'b'], [3, 'c'], [4, 'd']
+    ]);     # Yes, it is!
+
+For automatic line numbering, just pass C<__LINE__> to the constructor:
+
+    use List::AutoNumbered;                             # line 1
+    my $list = List::AutoNumbered->new(__LINE__);       # line 2
+    $list->load('a')->                                  # line 3
+        ('b')                                           # line 4
+        ('c')                                           # line 5
+        ('d');                                          # line 6
+
+    # Now $list->arr is [ [3,'a'], [4,'b'], [5,'c'], [6,'d'] ]
 
 =head1 GLOBALS
 
 =head2 $TRACE
 
 (Default falsy) If truthy, print trace output.  Must be accessed directly
-or requested on the C<use> line, e.g.:
+unless requested on the C<use> line.  Either of the following works:
 
     use List::AutoNumbered; $List::AutoNumbered::TRACE=1;
-
-or
-
     use List::AutoNumbered '*TRACE'; $TRACE=1;
 
 =cut
@@ -68,7 +84,8 @@ sub _dor { (defined $_[0]) ? $_[0] : $_[1] }
 =head2 new
 
 Constructor.  Call as C<< $class->new($number) >>.  Each successive element
-will have the next number, unless you say otherwise (e.g., using L</LSKIP>).
+will have the next number, unless you say otherwise (e.g., using
+L<LSKIP()|/LSKIP>).
 
 =cut
 
@@ -80,7 +97,6 @@ sub new {
     # Note that $self is captured --- the loader function does not take
     # a $self argument.
     $self->{loader} = sub { $self->_L(@_); return $self->{loader} };
-        # TODO? add a skip() method callable on the loader
 
     print "# Created - now $self->{num}\n" if $TRACE;
     return $self;
@@ -94,7 +110,7 @@ Returns the size of the array.  Like C<scalar @arr>.
 
 =cut
 
-sub size { return scalar @{ shift->{arr} }; }
+sub size { scalar @{ shift->{arr} }; }
 
 =head2 last
 
@@ -102,7 +118,7 @@ Returns the index of the last element in the array.  Like C<$#array>.
 
 =cut
 
-sub last { return shift->size-1; }      # $#
+sub last { shift->size-1; }
 
 =head2 arr
 
@@ -112,7 +128,18 @@ work if you do.
 
 =cut
 
-sub arr { return shift->{arr}; }
+sub arr { shift->{arr}; }
+
+=head2 last_number
+
+Returns the current number stored by the instance.  This is the number
+of the most recently preceding L<new()|/new> or L<load()|/load> call.
+This is B<not> the number that will be given to the next record, since that
+depends on whether or not the next record has a skip (L<LSKIP()|/LSKIP>).
+
+=cut
+
+sub last_number { shift->{num} }
 
 # }}}1
 # Loading {{{1
@@ -133,7 +160,7 @@ where C<$n> is the number of lines between this C<load()> call and the last one.
 Returns a coderef that you can call to chain loads.  For example, this works:
 
     $instance->load(...)->(...)(...)(...) ... ;
-    # You need an arrow ^^ here, but none after that.
+    # You need an arrow ^^ here, but don't need any after that.
 
 =cut
 
@@ -152,7 +179,7 @@ sub _L {
 =head2 add
 
 Add to the array being built, B<without> inserting the number on the front.
-Does increment the number and (TODO) respect skips, for consistency.
+Does increment the number and respect skips, for consistency.
 
 Returns the instance.
 
@@ -171,13 +198,13 @@ sub add {   # just add it
 =head2 LSKIP
 
 A convenience function to create a skipper.  Prototyped as C<($)> so you can
-use it conveniently with L</load>:
+use it conveniently with L<load()|/load>:
 
     $instance->load(LSKIP 1, whatever args...);
 
 If you are using line numbers, the parameter to C<LSKIP> should be the number
-of lines above the current line and below the last L</new> or L</load> call.
-For example:
+of lines above the current line and below the last L<new()|/new> or
+L<load()|/load> call.  For example:
 
     my $instance = List::AutoNumbered->new(__LINE__);
     # A line
@@ -199,7 +226,7 @@ sub LSKIP ($) {
 sub _update_lnum {
     my $self = shift;
 
-    if(@_ && ref $_[0] eq 'List::AutoNumbered::Skipper') {
+    if(ref $_[0] eq 'List::AutoNumbered::Skipper') {    # implies scalar @_
         $self->{num} += $_[0]->{how_many} + 1;
         print "# Skipped $_[0]->{how_many} - now $self->{num}\n" if $TRACE;
         return 1;   # We do need to shift
@@ -211,11 +238,11 @@ sub _update_lnum {
     }
 } #_update_lnum()
 
-=head1 PACKAGES
+=head1 INTERNAL PACKAGES
 
 =head2 List::AutoNumbered::Skipper
 
-This package represents a skip and is created by L</LSKIP>.
+This package represents a skip and is created by L<LSKIP()|/LSKIP>.
 No user-serviceable parts inside.
 
 =cut
@@ -233,7 +260,7 @@ part of the public API.
 
     sub new {
         my $class = shift;
-        die "Need a number" unless @_==1 and looks_like_number $_[0];
+        die "Need a single number" unless @_==1 and looks_like_number $_[0];
         bless {how_many => $_[0]}, $class;
     }
 } #List::AutoNumbered::Skipper
@@ -278,7 +305,7 @@ L<https://cpanratings.perl.org/d/List-AutoNumbered>
 
 =head1 ACKNOWLEDGEMENTS
 
-Thanks to zdim for discussion on the
+Thanks to zdim for discussion and ideas in the
 L<Stack Overflow question|https://stackoverflow.com/q/50510809/2877364>
 that was the starting point for this module.
 

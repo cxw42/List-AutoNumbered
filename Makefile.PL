@@ -153,7 +153,9 @@ my %opts = (
         'File::Spec' => '0',
     },
     TEST_REQUIRES => {
+        'Data::Dumper' => '0',  # to give us a random blessed reference
         'lib::relative' => '0.002',
+        'Test::Fatal' => '0',
         'Test::More' => '0',
     },
     PREREQ_PM => {

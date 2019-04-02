@@ -61,5 +61,5 @@ inc/
 nytprof.out
 pod2htm*.tmp
 pm_to_blib
-List-LineNumbered-*
-List-LineNumbered-*.tar.gz
+List-AutoNumbered-*
+List-AutoNumbered-*.tar.gz
