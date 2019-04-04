@@ -1,10 +1,21 @@
-# List::AutoNumbered - Add line numbers to lists while creating them
+# List::AutoNumbered - Add sequential numbers to lists while creating them
 
 
 
 This module adds sequential numbers to lists of lists so you don't have to
 type all the numbers.  Its original use case was for adding line numbers
 to lists of testcases.  For example:
+
+    use List::AutoNumbered;                             # line 1
+    my $list = List::AutoNumbered->new(__LINE__);       # line 2
+    $list->load('a')->                                  # line 3
+        ('b')                                           # line 4
+        ('c')                                           # line 5
+        ('d');                                          # line 6
+
+    # Now $list->arr is [ [3,'a'], [4,'b'], [5,'c'], [6,'d'] ]
+
+In general, you can pass any number to the constructor.  For example:
 
     use List::AutoNumbered;
     use Test::More tests => 1;
@@ -19,34 +30,14 @@ to lists of testcases.  For example:
         [1, 'a'], [2, 'b'], [3, 'c'], [4, 'd']
     ]);     # Yes, it is!
 
-For automatic line numbering, just pass `__LINE__` to the constructor:
-
-    use List::AutoNumbered;                             # line 1
-    my $list = List::AutoNumbered->new(__LINE__);       # line 2
-    $list->load('a')->                                  # line 3
-        ('b')                                           # line 4
-        ('c')                                           # line 5
-        ('d');                                          # line 6
-
-    # Now $list->arr is [ [3,'a'], [4,'b'], [5,'c'], [6,'d'] ]
-
-# GLOBALS
-
-## $TRACE
-
-(Default falsy) If truthy, print trace output.  Must be accessed directly
-unless requested on the `use` line.  Either of the following works:
-
-    use List::AutoNumbered; $List::AutoNumbered::TRACE=1;
-    use List::AutoNumbered '*TRACE'; $TRACE=1;
-
 # METHODS
 
 ## new
 
 Constructor.  Call as `$class->new($number)`.  Each successive element
 will have the next number, unless you say otherwise (e.g., using
-[LSKIP()](#lskip)).
+[LSKIP()](#lskip)).  Specifically, the first item in the list will have
+`$number+1`.
 
 ## size
 
@@ -94,6 +85,8 @@ Does increment the number and respect skips, for consistency.
 
 Returns the instance.
 
+# FUNCTIONS
+
 ## LSKIP
 
 A convenience function to create a skipper.  Prototyped as `($)` so you can
@@ -122,6 +115,16 @@ No user-serviceable parts inside.
 
 Creates a new skipper.  Parameters are for internal use only and are not
 part of the public API.
+
+# GLOBALS
+
+## $TRACE
+
+(Default falsy) If truthy, print trace output.  Must be accessed directly
+unless requested on the `use` line.  Either of the following works:
+
+    use List::AutoNumbered; $List::AutoNumbered::TRACE=1;
+    use List::AutoNumbered '*TRACE'; $TRACE=1;
 
 # AUTHOR
 
@@ -152,7 +155,8 @@ You can also look for information at:
 
 # ACKNOWLEDGEMENTS
 
-Thanks to zdim for discussion and ideas in the
+Thanks to [zdim](https://stackoverflow.com/users/4653379/zdim)
+for discussion and ideas in the
 [Stack Overflow question](https://stackoverflow.com/q/50510809/2877364)
 that was the starting point for this module.
 

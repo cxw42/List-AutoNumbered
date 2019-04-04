@@ -22,13 +22,24 @@ BEGIN {
 
 =head1 NAME
 
-List::AutoNumbered - Add line numbers to lists while creating them
+List::AutoNumbered - Add sequential numbers to lists while creating them
 
 =head1 SYNOPSIS
 
 This module adds sequential numbers to lists of lists so you don't have to
 type all the numbers.  Its original use case was for adding line numbers
 to lists of testcases.  For example:
+
+    use List::AutoNumbered;                             # line 1
+    my $list = List::AutoNumbered->new(__LINE__);       # line 2
+    $list->load('a')->                                  # line 3
+        ('b')                                           # line 4
+        ('c')                                           # line 5
+        ('d');                                          # line 6
+
+    # Now $list->arr is [ [3,'a'], [4,'b'], [5,'c'], [6,'d'] ]
+
+In general, you can pass any number to the constructor.  For example:
 
     use List::AutoNumbered;
     use Test::More tests => 1;
@@ -43,30 +54,10 @@ to lists of testcases.  For example:
         [1, 'a'], [2, 'b'], [3, 'c'], [4, 'd']
     ]);     # Yes, it is!
 
-For automatic line numbering, just pass C<__LINE__> to the constructor:
-
-    use List::AutoNumbered;                             # line 1
-    my $list = List::AutoNumbered->new(__LINE__);       # line 2
-    $list->load('a')->                                  # line 3
-        ('b')                                           # line 4
-        ('c')                                           # line 5
-        ('d');                                          # line 6
-
-    # Now $list->arr is [ [3,'a'], [4,'b'], [5,'c'], [6,'d'] ]
-
-=head1 GLOBALS
-
-=head2 $TRACE
-
-(Default falsy) If truthy, print trace output.  Must be accessed directly
-unless requested on the C<use> line.  Either of the following works:
-
-    use List::AutoNumbered; $List::AutoNumbered::TRACE=1;
-    use List::AutoNumbered '*TRACE'; $TRACE=1;
 
 =cut
 
-our $TRACE = 0;
+our $TRACE = 0; # Documented below
 
 =head1 METHODS
 
@@ -74,7 +65,7 @@ our $TRACE = 0;
 
 # }}}1
 
-# Internals {{{1
+# Internal helpers {{{1
 
 # Defined-or
 sub _dor { (defined $_[0]) ? $_[0] : $_[1] }
@@ -85,7 +76,8 @@ sub _dor { (defined $_[0]) ? $_[0] : $_[1] }
 
 Constructor.  Call as C<< $class->new($number) >>.  Each successive element
 will have the next number, unless you say otherwise (e.g., using
-L<LSKIP()|/LSKIP>).
+L<LSKIP()|/LSKIP>).  Specifically, the first item in the list will have
+C<$number+1>.
 
 =cut
 
@@ -195,6 +187,8 @@ sub add {   # just add it
 # }}}1
 # Skipping {{{1
 
+=head1 FUNCTIONS
+
 =head2 LSKIP
 
 A convenience function to create a skipper.  Prototyped as C<($)> so you can
@@ -272,6 +266,16 @@ part of the public API.
 # Rest of the docs {{{1
 __END__
 
+=head1 GLOBALS
+
+=head2 $TRACE
+
+(Default falsy) If truthy, print trace output.  Must be accessed directly
+unless requested on the C<use> line.  Either of the following works:
+
+    use List::AutoNumbered; $List::AutoNumbered::TRACE=1;
+    use List::AutoNumbered '*TRACE'; $TRACE=1;
+
 =head1 AUTHOR
 
 Christopher White, C<< <cxwembedded at gmail.com> >>
@@ -305,7 +309,8 @@ L<https://cpanratings.perl.org/d/List-AutoNumbered>
 
 =head1 ACKNOWLEDGEMENTS
 
-Thanks to zdim for discussion and ideas in the
+Thanks to L<zdim|https://stackoverflow.com/users/4653379/zdim>
+for discussion and ideas in the
 L<Stack Overflow question|https://stackoverflow.com/q/50510809/2877364>
 that was the starting point for this module.
 
