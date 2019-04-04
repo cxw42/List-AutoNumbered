@@ -32,12 +32,12 @@ to lists of testcases.  For example:
 
     use List::AutoNumbered;                             # line 1
     my $list = List::AutoNumbered->new(__LINE__);       # line 2
-    $list->load('a')->                                  # line 3
-        ('b')                                           # line 4
-        ('c')                                           # line 5
-        ('d');                                          # line 6
+    $list->load("a")->                                  # line 3
+        ("b")                                           # line 4
+        ("c")                                           # line 5
+        ("d");                                          # line 6
 
-    # Now $list->arr is [ [3,'a'], [4,'b'], [5,'c'], [6,'d'] ]
+    # Now $list->arr is [ [3,"a"], [4,"b"], [5,"c"], [6,"d"] ]
 
 In general, you can pass any number to the constructor.  For example:
 
@@ -45,15 +45,14 @@ In general, you can pass any number to the constructor.  For example:
     use Test::More tests => 1;
 
     my $list = List::AutoNumbered->new;     # First entry will be number 1
-    $list->load('a')->      # Yes, trailing arrow
-        ('b')               # Magic!  Don't need any more arrows!
-        ('c')
-        ('d');
+    $list->load("a")->      # Yes, trailing arrow
+        ("b")               # Magic!  Don"t need any more arrows!
+        ("c")
+        ("d");
 
     is_deeply($list->arr, [
-        [1, 'a'], [2, 'b'], [3, 'c'], [4, 'd']
+        [1, "a"], [2, "b"], [3, "c"], [4, "d"]
     ]);     # Yes, it is!
-
 
 =cut
 
@@ -274,7 +273,7 @@ __END__
 unless requested on the C<use> line.  Either of the following works:
 
     use List::AutoNumbered; $List::AutoNumbered::TRACE=1;
-    use List::AutoNumbered '*TRACE'; $TRACE=1;
+    use List::AutoNumbered q(*TRACE); $TRACE=1;
 
 =head1 AUTHOR
 
