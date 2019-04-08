@@ -1,5 +1,8 @@
 Revision history for List-LineNumbered
 
+0.000005    2019-04-09
+        Production release of 0.000004-TRIAL
+
 0.000004-TRIAL  2019-04-04
         Updated Makefile.PL to handle test_requires on older EUMMs
 
