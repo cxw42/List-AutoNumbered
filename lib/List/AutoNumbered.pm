@@ -4,7 +4,7 @@ use 5.006;
 use strict;
 use warnings;
 
-our $VERSION = '0.000006'; # TRIAL
+our $VERSION = '0.000007';
 
 # Exports
 use parent 'Exporter';
