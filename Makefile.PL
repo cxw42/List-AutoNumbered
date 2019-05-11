@@ -193,6 +193,14 @@ my %opts = (
             },
         },
 
+        # The gymnastics in this file are primarily for developer
+        # convenience.  The actual dist, if processed by an installer
+        # new enough to support x_static_install, doesn't need any of
+        # the above processing for a plain installation.  Therefore,
+        # x_static_install is OK.  For more, see
+        # http://blogs.perl.org/users/shoichi_kaji1/2017/03/make-your-cpan-module-static-installable.html
+        "x_static_install" => "1",
+
         @provides,
 
     }, #META_MERGE
