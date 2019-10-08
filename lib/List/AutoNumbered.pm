@@ -3,6 +3,8 @@ package List::AutoNumbered;
 use 5.006;
 use strict;
 use warnings;
+use overload 
+    '@{}' => \&arr;
 
 our $VERSION = '0.000008'; # TRIAL
 
@@ -160,6 +162,11 @@ sub last { shift->size-1; }
 Returns a reference to the array being built.  Please do not modify this
 array directly until you are done loading it.  List::AutoNumbered may not
 work if you do.
+
+Can also be called by array dereferencing the List::AutoNumbered object:
+
+    my $list = List::AutoNumbered->new...;
+    foreach my $item (@$list) { ... }    # Instead of my $item (@{$list->arr})
 
 =cut
 
