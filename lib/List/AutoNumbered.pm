@@ -3,10 +3,10 @@ package List::AutoNumbered;
 use 5.006;
 use strict;
 use warnings;
-use overload 
+use overload
     '@{}' => \&arr;
 
-our $VERSION = '0.000008'; # TRIAL
+our $VERSION = '0.000009'; # TRIAL
 
 # Exports
 use parent 'Exporter';
@@ -43,6 +43,7 @@ to lists of testcases.  For example:
         ("d");                                          # line 6
 
     # Now $list->arr is [ [3,"a"], [4,"b"], [5,"c"], [6,"d"] ]
+    # and @$list is ( [3,"a"] ... ).
 
 In general, you can pass any number to the constructor.  For example:
 
@@ -163,7 +164,7 @@ Returns a reference to the array being built.  Please do not modify this
 array directly until you are done loading it.  List::AutoNumbered may not
 work if you do.
 
-Can also be called by array dereferencing the List::AutoNumbered object:
+This can also be called by using the List::AutoNumbered object as an array:
 
     my $list = List::AutoNumbered->new...;
     foreach my $item (@$list) { ... }    # Instead of my $item (@{$list->arr})
