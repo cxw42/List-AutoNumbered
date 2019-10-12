@@ -104,10 +104,10 @@ testhere:   # Run the tests from lib rather than blib
 \tprove -lj4
 
 README.md: @{[$VERSION_FROM]} Makefile.PL $make_readme_md
-\t"$secure_perl_path" "$make_readme_md" -i "\$<" -o "\$@" -f md
+\t-"$secure_perl_path" "$make_readme_md" -i "\$<" -o "\$@" -f md
 
 README: @{[$VERSION_FROM]} Makefile.PL $make_readme_md
-\t"$secure_perl_path" "$make_readme_md" -i "\$<" -o "\$@" -f text
+\t-"$secure_perl_path" "$make_readme_md" -i "\$<" -o "\$@" -f text
 
 all :: README.md README
 dist :: README.md README
@@ -189,6 +189,7 @@ my %opts = (
                 requires => {
                     'App::RewriteVersion' => '0',   # for perl-bump-version
                     'Module::Metadata' => '1.000016',
+                    'Path::Class' => '0',           # for support/readme.pl
                 },
             },
         },

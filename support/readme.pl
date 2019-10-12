@@ -1,6 +1,5 @@
 #!perl
 # readme_md.pl: Make README.md from a Perl file.
-# Part of Games::Dice::Tester.
 
 use 5.014;
 use strict;
