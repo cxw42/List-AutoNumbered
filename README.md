@@ -197,9 +197,11 @@ for discussion and ideas in the
 [Stack Overflow question](https://stackoverflow.com/q/50510809/2877364)
 that was the starting point for this module.
 
+Thanks to Dan Stewart for code contributions.
+
 # LICENSE AND COPYRIGHT
 
-Copyright 2019 Christopher White.
+Copyright 2019--2020 Christopher White.
 
 This program is free software; you can redistribute it and/or modify it
 under the terms of either: the GNU General Public License as published

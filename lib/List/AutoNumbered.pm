@@ -6,7 +6,7 @@ use warnings;
 use overload
     '@{}' => \&arr;
 
-our $VERSION = '0.000009'; # TRIAL
+our $VERSION = '0.000009';  # TRIAL
 
 # Exports
 use parent 'Exporter';
@@ -365,9 +365,11 @@ for discussion and ideas in the
 L<Stack Overflow question|https://stackoverflow.com/q/50510809/2877364>
 that was the starting point for this module.
 
+Thanks to Dan Stewart for code contributions.
+
 =head1 LICENSE AND COPYRIGHT
 
-Copyright 2019 Christopher White.
+Copyright 2019--2020 Christopher White.
 
 This program is free software; you can redistribute it and/or modify it
 under the terms of either: the GNU General Public License as published

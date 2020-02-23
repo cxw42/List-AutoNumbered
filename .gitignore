@@ -46,6 +46,9 @@ TODO
 
 *.bak
 
+# A place to hold release tarballs
+/zip/
+
 # Module::Starter ignores
 Makefile
 Makefile.old
