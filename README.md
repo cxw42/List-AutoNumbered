@@ -1,5 +1,7 @@
 # List::AutoNumbered - Add sequential numbers to lists while creating them
 
+[![Appveyor Badge](https://ci.appveyor.com/api/projects/status/github/cxw42/list-autonumbered?svg=true)](https://ci.appveyor.com/project/cxw42/list-autonumbered)
+
 
 
 This module adds sequential numbers to lists of lists so you don't have to
@@ -186,9 +188,9 @@ You can also look for information at:
 
     [https://metacpan.org/pod/List::AutoNumbered](https://metacpan.org/pod/List::AutoNumbered)
 
-- CPAN Ratings
+- Appveyor (CI builds)
 
-    [https://cpanratings.perl.org/d/List-AutoNumbered](https://cpanratings.perl.org/d/List-AutoNumbered)
+    [https://ci.appveyor.com/project/cxw42/list-autonumbered](https://ci.appveyor.com/project/cxw42/list-autonumbered)
 
 # ACKNOWLEDGEMENTS
 

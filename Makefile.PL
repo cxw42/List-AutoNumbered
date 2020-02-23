@@ -104,10 +104,10 @@ testhere:   # Run the tests from lib rather than blib
 \tprove -lj4
 
 README.md: @{[$VERSION_FROM]} Makefile.PL $make_readme_md
-\t-"$secure_perl_path" "$make_readme_md" -i "\$<" -o "\$@" -f md
+\t-"$secure_perl_path" "$make_readme_md" -i "\$<" -o "\$@" -f md --appveyor cxw42/list-autonumbered
 
 README: @{[$VERSION_FROM]} Makefile.PL $make_readme_md
-\t-"$secure_perl_path" "$make_readme_md" -i "\$<" -o "\$@" -f text
+\t-"$secure_perl_path" "$make_readme_md" -i "\$<" -o "\$@" -f text --appveyor cxw42/list-autonumbered
 
 all :: README.md README
 dist :: README.md README

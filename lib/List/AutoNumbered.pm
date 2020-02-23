@@ -352,9 +352,9 @@ You can also look for information at:
 
 L<https://metacpan.org/pod/List::AutoNumbered>
 
-=item * CPAN Ratings
+=item * Appveyor (CI builds)
 
-L<https://cpanratings.perl.org/d/List-AutoNumbered>
+L<https://ci.appveyor.com/project/cxw42/list-autonumbered>
 
 =back
 
