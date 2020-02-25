@@ -6,7 +6,7 @@ use warnings;
 use overload
     '@{}' => \&arr;
 
-our $VERSION = '0.000009';  # TRIAL
+our $VERSION = '0.000010';
 
 # Exports
 use parent 'Exporter';

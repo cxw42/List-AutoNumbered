@@ -1,5 +1,8 @@
 Revision history for List-AutoNumbered
 
+0.000010        2020-02-24
+    - Non-TRIAL release
+
 0.000009        2020-02-23  (TRIAL RELEASE)
     - Array overload: now `for(@$list)` works (#2, #3)
       (thanks to Dan Stewart)
